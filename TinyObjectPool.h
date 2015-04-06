@@ -10,8 +10,8 @@ class TinyObjectPool {
 public:
 	TinyObjectPool()
 	: mFreeHead(NULL)
-	, mObjectSize(sizeof(T)) {
-        mPtrLen = sizeof(T *);
+	, mObjectSize(sizeof(T))
+    , mPtrLen(sizeof(T *)) {
 		//make sure we have enough space to store a pointer
 		if (mObjectSize < mPtrLen)
 			mObjectSize = mPtrLen;
