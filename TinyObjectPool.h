@@ -5,17 +5,16 @@
 #include <cstdlib>
 #include <cstring>
 
-const size_t kPtrLen = sizeof(void *);
-
 template<class T>
 class TinyObjectPool {
 public:
 	TinyObjectPool()
 	: mFreeHead(NULL)
 	, mObjectSize(sizeof(T)) {
+        mPtrLen = sizeof(T *);
 		//make sure we have enough space to store a pointer
-		if (mObjectSize < kPtrLen)
-			mObjectSize = kPtrLen;
+		if (mObjectSize < mPtrLen)
+			mObjectSize = mPtrLen;
 	}
 
 	T* newInstance() {
@@ -36,10 +35,10 @@ public:
 		inst->~T();
         if (mFreeHead) {
             //set inst's first sizeOf(ptr) memory to pre head address
-            memcpy(inst, &mFreeHead, kPtrLen);
+            memcpy(inst, &mFreeHead, mPtrLen);
         } else {
             //set inst's first sizeOf(ptr) memory to NULL, for it's the only element
-			memset(inst, 0, kPtrLen);
+			memset(inst, 0, mPtrLen);
         }
         //set the head to inst
         mFreeHead = inst;
@@ -47,6 +46,7 @@ public:
 private:
 	T *mFreeHead;
 	size_t mObjectSize;
+    size_t mPtrLen;
 };
 
 #endif
