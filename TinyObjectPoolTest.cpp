@@ -32,14 +32,18 @@ int main() {
 
 	Object* obj2 = pool.newInstance();
 	obj2->init('b', 2, 2, 2);
-	obj2->printSelf();
-
-	pool.recycleInstance(obj1);
+    obj2->printSelf();
+    
+    pool.recycleInstance(obj1);
     pool.recycleInstance(obj2);
 
 	Object* obj3 = pool.newInstance();
 	obj3->init('c', 3, 3, 3);
 	obj3->printSelf();
+    
+    Object* obj4 = pool.newInstance();
+    obj4->init('d', 4, 4, 4);
+    obj4->printSelf();
     
     return 0;
 }
